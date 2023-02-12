@@ -38,10 +38,10 @@ export class App extends Component {
     this.setState({ filter: filterWord });
   };
 
-  deleteContact = contactID => {
+  deleteContact = id => {
     this.setState(prevState => ({
-      contacts: prevState.contacts.filter.toLocaleLowerCase()(
-        contact => contact.id !== contactID
+      contacts: prevState.contacts.filter(
+        contact => contact.id !== id
       ),
     }));
   };
