@@ -24,6 +24,7 @@ export class App extends Component {
       )
     ) {
       alert(`${newContact.name} is already in contact`);
+      resetForm();
     } else {
       this.setState(prevState => ({
         contacts: [newContact, ...prevState.contacts],
@@ -39,16 +40,24 @@ export class App extends Component {
 
   deleteContact = contactID => {
     this.setState(prevState => ({
-      contacts: prevState.contacts.filter(contact => contact.id !== contactID),
+      contacts: prevState.contacts.filter.toLocaleLowerCase()(
+        contact => contact.id !== contactID
+      ),
     }));
   };
 
-  render() {
-    const { filter } = this.state;
-    const { addContact, deleteContact, onFilterChange } = this;
+  filterContact = () => {
     const visibleContact = this.state.contacts.filter(abonent =>
       abonent.name.toLocaleLowerCase().includes(this.state.filter)
     );
+
+    return visibleContact;
+  };
+
+  render() {
+    const { addContact, deleteContact, onFilterChange, filterContact } = this;
+    const { filter } = this.state;
+
     return (
       <div
         style={{
@@ -68,7 +77,7 @@ export class App extends Component {
         <h4 style={{ margin: '15px 0 ' }}>Find contacs by name</h4>
         <Filter value={filter} onFilterChange={onFilterChange} />
         <ContactList
-          listAbonents={visibleContact}
+          listAbonents={filterContact()}
           deleteContact={deleteContact}
         />
       </div>
