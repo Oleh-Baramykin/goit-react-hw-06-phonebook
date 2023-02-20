@@ -15,6 +15,18 @@ export class App extends Component {
     filter: '',
   };
 
+  componentDidUpdate(_, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
+
+  componentDidMount() {
+    const contacs = localStorage.getItem('contacts');
+    const parsedContacts = JSON.parse(contacs);
+    this.setState({ contacts: parsedContacts });
+  }
+
   addContact = (values, { resetForm }) => {
     const newContact = { id: nanoid(3), ...values };
     const newContactName = newContact.name.toLowerCase();
@@ -40,9 +52,7 @@ export class App extends Component {
 
   deleteContact = id => {
     this.setState(prevState => ({
-      contacts: prevState.contacts.filter(
-        contact => contact.id !== id
-      ),
+      contacts: prevState.contacts.filter(contact => contact.id !== id),
     }));
   };
 
