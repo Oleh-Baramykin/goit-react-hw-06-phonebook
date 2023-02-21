@@ -12,7 +12,7 @@ export class App extends Component {
       { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
-    filtr: '',
+    filter: '',
   };
 
   componentDidUpdate(_, prevState) {
@@ -58,7 +58,7 @@ export class App extends Component {
 
   filterContact = () => {
     const visibleContact = this.state.contacts.filter(abonent =>
-      abonent.name.toLowerCase().includes(this.state.filtr)
+      abonent.name.toLowerCase().includes(this.state.filter)
     );
 
     return visibleContact;
@@ -66,7 +66,7 @@ export class App extends Component {
 
   render() {
     const { addContact, deleteContact, onFilterChange, filterContact } = this;
-    const { filtr } = this.state;
+    const { filter } = this.state;
 
     return (
       <div
@@ -85,7 +85,7 @@ export class App extends Component {
         <FormList onSubmit={addContact} />
         <h3 style={{ margin: '15px 0 0' }}>Contacts</h3>
         <h4 style={{ margin: '15px 0 ' }}>Find contacs by name</h4>
-        <Filter value={filtr} onFilterChange={onFilterChange} />
+        <Filter value={filter} onFilterChange={onFilterChange} />
         <ContactList
           listAbonents={filterContact()}
           deleteContact={deleteContact}
