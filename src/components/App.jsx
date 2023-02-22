@@ -69,7 +69,7 @@ export class App extends Component {
     const { filter } = this.state;
 
     const visibleContact = this.state.contacts.filter(abonent =>
-      abonent.name.toLowerCase().includes(this.state.filter)
+      abonent.name.toLowerCase().includes(filter)
     );
 
     return (
