@@ -60,14 +60,13 @@ export class App extends Component {
     const visibleContact = this.state.contacts.filter(abonent =>
       abonent.name.toLowerCase().includes(this.state.filter)
     );
-
     return visibleContact;
   };
 
   render() {
     const { addContact, deleteContact, onFilterChange, filterContact } = this;
     const { filter } = this.state;
-    console.log(this.state.contacts);
+
     return (
       <div
         style={{
