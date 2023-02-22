@@ -56,17 +56,21 @@ export class App extends Component {
     }));
   };
 
-  filterContact = () => {
+  // filterContact = () => {
+  //   const visibleContact = this.state.contacts.filter(abonent =>
+  //     abonent.name.toLowerCase().includes(this.state.filter)
+  //   );
+
+  //   return visibleContact;
+  // };
+
+  render() {
+    const { addContact, deleteContact, onFilterChange } = this;
+    const { filter } = this.state;
+
     const visibleContact = this.state.contacts.filter(abonent =>
       abonent.name.toLowerCase().includes(this.state.filter)
     );
-
-    return visibleContact;
-  };
-
-  render() {
-    const { addContact, deleteContact, onFilterChange, filterContact } = this;
-    const { filter } = this.state;
 
     return (
       <div
@@ -87,7 +91,7 @@ export class App extends Component {
         <h4 style={{ margin: '15px 0 ' }}>Find contacs by name</h4>
         <Filter value={filter} onFilterChange={onFilterChange} />
         <ContactList
-          listAbonents={filterContact()}
+          listAbonents={visibleContact}
           deleteContact={deleteContact}
         />
       </div>
