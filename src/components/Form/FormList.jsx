@@ -1,8 +1,7 @@
 import * as yup from 'yup';
 import PropTypes from 'prop-types';
-import styled from '@emotion/styled';
-import { Formik, Form, Field } from 'formik';
-import { Label, Button, Fieldset } from './FormList.styled';
+import { Formik, Form } from 'formik';
+import { Label, Button, Fieldset, Input } from './FormList.styled';
 
 const initialValues = {
   name: '',
@@ -14,14 +13,6 @@ const schema = yup.object().shape({
   number: yup.number().min(6).required(),
 });
 
-const Input = styled(Field)`
-  font-size: 25px;
-  margin-top: 10px;
-  padding-left: 10px;
-  height: 40px;
-  border-radius: 10px;
-  border-width: 1px;
-`;
 export const FormList = ({ onSubmit }) => {
   return (
     <Formik

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Globstyle } from './App.styled';
 import { nanoid } from 'nanoid';
 import { FormList } from './Form/FormList';
 import { ContactList } from './ContactsList/CotactsList';
@@ -64,31 +65,26 @@ export class App extends Component {
 
   render() {
     const { addContact, deleteContact, onFilterChange, filterContact } = this;
-    const { filter } = this.state;
+    const { filter, contacts } = this.state;
 
     return (
-      <div
-        style={{
-          height: '100vh',
-          display: 'flex',
-          justifyContent: 'center',
-          flexWrap: 'wrap',
-          alignItems: 'center',
-          fontSize: 40,
-          color: '#010101',
-          flexDirection: 'column',
-        }}
-      >
-        <h2>Phonebook</h2>
+      <Globstyle>
+        <h1>Phonebook</h1>
         <FormList onSubmit={addContact} />
-        <h3 style={{ margin: '15px 0 0' }}>Contacts</h3>
-        <h4 style={{ margin: '15px 0 ' }}>Find contacs by name</h4>
-        <Filter value={filter} onFilterChange={onFilterChange} />
-        <ContactList
-          listAbonents={filterContact()}
-          deleteContact={deleteContact}
-        />
-      </div>
+        {contacts.length === 0 ? (
+          <h2>You have no contacts saved</h2>
+        ) : (
+          <>
+            <h2 style={{ margin: '30px 0 0' }}>Contacts</h2>
+            <h2 style={{ margin: '15px 0 ' }}>Find contacs by name</h2>
+            <Filter value={filter} onFilterChange={onFilterChange} />
+            <ContactList
+              listAbonents={filterContact()}
+              deleteContact={deleteContact}
+            />
+          </>
+        )}
+      </Globstyle>
     );
   }
 }
