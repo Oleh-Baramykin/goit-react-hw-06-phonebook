@@ -57,9 +57,11 @@ export class App extends Component {
   };
 
   filterContact = () => {
-    const visibleContact = this.state.contacts.filter(abonent =>
-      abonent.name.toLowerCase().includes(this.state.filter)
+    const { contacts, filter } = this.state;
+    const visibleContact = contacts.filter(abonent =>
+      abonent.name.toLowerCase().includes(filter)
     );
+
     return visibleContact;
   };
 
@@ -77,11 +79,14 @@ export class App extends Component {
           <>
             <h2 style={{ margin: '30px 0 0' }}>Contacts</h2>
             <h2 style={{ margin: '15px 0 ' }}>Find contacs by name</h2>
+
             <Filter value={filter} onFilterChange={onFilterChange} />
-            <ContactList
-              listAbonents={filterContact()}
-              deleteContact={deleteContact}
-            />
+            {filter !== contacts.name && (
+              <ContactList
+                listAbonents={filterContact()}
+                deleteContact={deleteContact}
+              />
+            )}
           </>
         )}
       </Globstyle>

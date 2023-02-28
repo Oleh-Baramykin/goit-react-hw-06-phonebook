@@ -28,7 +28,9 @@ export const Li = styled.li`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: white;
+  background-color: #a5f5ef;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 `;
 
 export const Ul = styled.ul`
@@ -38,7 +40,4 @@ export const Ul = styled.ul`
   flex-direction: column;
   gap: 10px;
   border-radius: 10px;
-  background-color: #9ae5fa;
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
-    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 `;

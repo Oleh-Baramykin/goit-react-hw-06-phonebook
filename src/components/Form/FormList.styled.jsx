@@ -41,7 +41,4 @@ export const Input = styled(Field)`
   height: 40px;
   border-radius: 10px;
   border-width: 0;
-
-  /* border-radius: 10px;
-  border-width: 1px; */
 `;
