@@ -35,8 +35,7 @@ export function App() {
   };
 
   const onFilterChange = e => {
-    const filterWord = e.target.value.toLowerCase();
-    setFilter(filterWord);
+    setFilter(e.target.value.toLowerCase());
   };
 
   const deleteContact = id => {
@@ -73,52 +72,3 @@ export function App() {
     </Globstyle>
   );
 }
-//   state = {
-//     contacts: [
-//       { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-//       { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-//       { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-//       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-//     ],
-//     filter: '',
-//   };
-
-//   componentDidMount() {
-//     const parsedContacts = JSON.parse(localStorage.getItem('contacts'));
-//     if (parsedContacts) this.setState({ contacts: parsedContacts });
-//   }
-
-//   componentDidUpdate(_, prevState) {
-//     if (this.state.contacts !== prevState.contacts) {
-//       localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-//     }
-//   }
-
-//   render() {
-//     const { addContact, deleteContact, onFilterChange, filterContact } = this;
-//     const { filter, contacts } = this.state;
-
-//     return (
-//       <Globstyle>
-//         <h1>Phonebook</h1>
-//         <FormList onSubmit={addContact} />
-//         {contacts.length === 0 ? (
-//           <h2>You have no contacts saved</h2>
-//         ) : (
-//           <>
-//             <h2 style={{ margin: '30px 0 0' }}>Contacts</h2>
-//             <h2 style={{ margin: '15px 0 ' }}>Find contacs by name</h2>
-
-//             <Filter value={filter} onFilterChange={onFilterChange} />
-//             {filter !== contacts.name && (
-//               <ContactList
-//                 listAbonents={filterContact()}
-//                 deleteContact={deleteContact}
-//               />
-//             )}
-//           </>
-//         )}
-//       </Globstyle>
-//     );
-//   }
-// }
