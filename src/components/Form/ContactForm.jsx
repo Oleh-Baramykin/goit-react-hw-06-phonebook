@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 import PropTypes from 'prop-types';
 import { Formik, Form } from 'formik';
-import { Label, Button, Fieldset, Input } from './FormList.styled';
+import { Label, Button, Fieldset, Input } from './ContatctForm.styled';
 
 const initialValues = {
   name: '',
@@ -13,7 +13,7 @@ const schema = yup.object().shape({
   number: yup.number().min(6).required(),
 });
 
-export const FormList = ({ onSubmit }) => {
+export const ContactForm = ({ onSubmit }) => {
   return (
     <Formik
       onSubmit={onSubmit}
@@ -51,6 +51,6 @@ export const FormList = ({ onSubmit }) => {
   );
 };
 
-FormList.propTypes = {
+ContactForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
