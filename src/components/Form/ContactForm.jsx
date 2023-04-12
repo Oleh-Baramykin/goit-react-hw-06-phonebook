@@ -1,56 +1,79 @@
-import * as yup from 'yup';
-import PropTypes from 'prop-types';
-import { Formik, Form } from 'formik';
-import { Label, Button, Fieldset, Input } from './ContatctForm.styled';
+import { useState } from 'react';
+import { Label, Input, Button, Fieldset } from './ContatctForm.styled';
+import { nanoid } from 'nanoid';
+import { useSelector, useDispatch } from 'react-redux';
+import { getContacts, addContact } from 'redux/contactsSlice';
+import { Notification } from 'components/Notification/Notification';
 
-const initialValues = {
-  name: '',
-  number: '',
-};
+export const ContactForm = () => {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+  const dispatch = useDispatch();
+  const contacts = useSelector(getContacts);
 
-const schema = yup.object().shape({
-  name: yup.string().required(),
-  number: yup.number().min(6).required(),
-});
+  const onInputChange = e => {
+    const { name, value } = e.target;
+    switch (name) {
+      case 'name':
+        setName(value);
+        break;
+      case 'number':
+        setNumber(value);
+        break;
+      default:
+        return;
+    }
+  };
 
-export const ContactForm = ({ onSubmit }) => {
+  const onFormSubmit = e => {
+    e.preventDefault();
+    if (
+      contacts.find(
+        contact => contact.name.toLowerCase() === name.toLowerCase()
+      )
+    ) {
+      Notification(name);
+      return;
+    } else {
+      dispatch(addContact({ id: nanoid(4), name, number }));
+      resetForm();
+    }
+  };
+
+  const resetForm = () => {
+    setName('');
+    setNumber('');
+  };
+
   return (
-    <Formik
-      onSubmit={onSubmit}
-      initialValues={initialValues}
-      validationSchema={schema}
-    >
-      <Form>
-        <Fieldset>
-          <Label htmlFor="name">
-            Name
-            <Input
-              type="text"
-              name="name"
-              pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-              title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-              required
-              placeholder="Enter name"
-            />
-          </Label>
-          <Label htmlFor="tel">
-            Number
-            <Input
-              type="tel"
-              name="number"
-              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-              title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-              required
-              placeholder="Enter number"
-            />
-          </Label>
-          <Button type="submit">Add constact</Button>
-        </Fieldset>
-      </Form>
-    </Formik>
+    <form onSubmit={onFormSubmit}>
+      <Fieldset>
+        <Label>
+          Name
+          <Input
+            type="text"
+            name="name"
+            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+            required
+            onChange={onInputChange}
+            value={name}
+          />
+        </Label>
+        <Label>
+          Number
+          <Input
+            type="tel"
+            name="number"
+            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+            required
+            onChange={onInputChange}
+            value={number}
+          />
+        </Label>
+        <Button type="submit">Add Contact</Button>
+      </Fieldset>
+    </form>
   );
-};
-
-ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
 };

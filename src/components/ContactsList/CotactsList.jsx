@@ -1,24 +1,42 @@
-import PropTypes from 'prop-types';
 import { Button, Li, Ul } from './ContactList.styled';
+import { useSelector, useDispatch } from 'react-redux';
+import { deleteContact, getContacts } from 'redux/contactsSlice';
+import { getFilterValue } from 'redux/filterSlice';
+import {
+  noMatchesNotify,
+  noContactsNotify,
+} from 'components/Notification/Notification';
 
-export const ContactList = ({ listAbonents, deleteContact }) => (
-  <Ul>
-    {listAbonents.map(({ id, name, number }) => (
-      <Li key={id}>
-        {name}: {number}
-        <Button onClick={() => deleteContact(id)}>Delete</Button>
-      </Li>
-    ))}
-  </Ul>
-);
+export const ContactList = () => {
+  const dispatch = useDispatch();
+  const filter = useSelector(getFilterValue);
+  const contacts = useSelector(getContacts);
 
-ContactList.propTypes = {
-  deleteContact: PropTypes.func.isRequired,
-  listAbonents: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    })
-  ),
+  const filteredContacts = () => {
+    // const normalizedFilter = filter.toLowerCase();
+    const filtered = contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter)
+    );
+    if (filtered.length === 0 && filter) {
+      noMatchesNotify();
+    }
+    if (contacts.length === 0) {
+      noContactsNotify();
+    }
+
+    return filtered;
+  };
+
+  return (
+    <Ul>
+      {filteredContacts().map(({ id, name, number }) => (
+        <Li key={id}>
+          {name}: {number}
+          <Button type="button" onClick={() => dispatch(deleteContact(id))}>
+            Delete
+          </Button>
+        </Li>
+      ))}
+    </Ul>
+  );
 };
